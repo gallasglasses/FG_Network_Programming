@@ -59,7 +59,6 @@ public class WeaponComponent : NetworkBehaviour
     private void Attack()
     {
         canFire = false;
-
         StartShooting();
     }
 
@@ -69,8 +68,6 @@ public class WeaponComponent : NetworkBehaviour
         if (IsServer)
         {
             projectileSpawner.SpawnProjectile(spawnPosition, Quaternion.identity, projectileDirection);
-            //projectile.SetDirection(projectileDirection);
-            //projectile.GetComponent<NetworkObject>().Spawn(true);
         }
         else if (IsClient && IsOwner)
         {
@@ -80,18 +77,16 @@ public class WeaponComponent : NetworkBehaviour
         isReadyAttack = false;
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [Rpc(SendTo.Server)]
     public void SpawnProjectileServerRpc(Vector3 position, Vector3 direction)
     {
         projectileSpawner.SpawnProjectile(position, Quaternion.identity, direction);
+    }
 
-        //var projectile = projectileSpawner.pool.Get();
-        //projectile.transform.position = position;
-        //projectile.transform.rotation = Quaternion.identity;
-        //projectile.SetDirection(direction);
 
-        //projectile.GetComponent<NetworkObject>().Spawn(true);
-        //projectile.UpdateProjectileClientRpc(position);
+    private void SpawnProjectileObserver()
+    {
+
     }
 
     private void OnDisable()

@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6992463668730132638}
   - component: {fileID: 1584791928226097335}
+  - component: {fileID: 6413881647912239737}
   - component: {fileID: 8137328093314274376}
-  - component: {fileID: 6240601762899472248}
   - component: {fileID: 4308708807219132721}
   - component: {fileID: 7153123555581412464}
   - component: {fileID: 3114260608446621320}
@@ -55,7 +55,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2661867033
+  GlobalObjectIdHash: 3222101498
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -68,6 +68,22 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &6413881647912239737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3600532709393080283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a73e86c122a204e973a93630229752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  moveSpeed: 7
+  rotateSpeed: 10
+  raycastDistance: 10
 --- !u!114 &8137328093314274376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,21 +120,6 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &6240601762899472248
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3600532709393080283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31e7914ef85ced6459e76642ee5f6a11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  moveSpeed: 7
-  rotateSpeed: 10
 --- !u!136 &4308708807219132721
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -139,7 +140,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.7
-  m_Height: 2
+  m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &7153123555581412464
@@ -214,7 +215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  player: {fileID: 6240601762899472248}
+  player: {fileID: 6413881647912239737}
 --- !u!114 &3329117179459870238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,10 +377,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3392442784839931225, guid: e9cc110b248de5f4381021c27689cea7, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 6240601762899472248}
     - target: {fileID: 5364274667126190561, guid: e9cc110b248de5f4381021c27689cea7, type: 3}
       propertyPath: m_Name
       value: PlayerVisual

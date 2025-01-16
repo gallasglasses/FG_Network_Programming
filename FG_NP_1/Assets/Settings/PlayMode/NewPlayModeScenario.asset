@@ -21,39 +21,19 @@ MonoBehaviour:
     - Main Editor|0_run
     - Main Editor|0_deploy
     m_PlayerTag: 
-    m_InitialScene: {fileID: 102900000, guid: 52f35958aac6d6540ba3e90a4b37ab4f, type: 3}
-  m_EditorInstances: []
-  m_LocalInstances:
-  - Name: Instance
-    <CorrespondingNodeId>k__BackingField: Instance - Run
+    m_InitialScene: {fileID: 102900000, guid: ce76a7d3ead06814e8389bb337a9f555, type: 3}
+  m_EditorInstances:
+  - Name: Player 2
+    <CorrespondingNodeId>k__BackingField: Player 2|1_run
     m_Nodes:
-    - Instance - Build
-    - Instance - Run
-    m_BuildProfile: {fileID: 11400000, guid: d0d466a729552d04caac33615eb70d89, type: 2}
-    advancedConfiguration:
-      m_StreamLogsToMainEditor: 1
-      m_LogsColor: {r: 0.3643, g: 0.581, b: 0.8679, a: 1}
-      m_Arguments: -screen-fullscreen 0 -screen-width 1024 -screen-height 720
-  - Name: Instance(1)
-    <CorrespondingNodeId>k__BackingField: Instance(1) - Run
-    m_Nodes:
-    - Instance(1) - Build
-    - Instance(1) - Run
-    m_BuildProfile: {fileID: 11400000, guid: d0d466a729552d04caac33615eb70d89, type: 2}
-    advancedConfiguration:
-      m_StreamLogsToMainEditor: 1
-      m_LogsColor: {r: 0.3643, g: 0.581, b: 0.8679, a: 1}
-      m_Arguments: -screen-fullscreen 0 -screen-width 1024 -screen-height 720
-  - Name: Instance(2)
-    <CorrespondingNodeId>k__BackingField: Instance(2) - Run
-    m_Nodes:
-    - Instance(2) - Build
-    - Instance(2) - Run
-    m_BuildProfile: {fileID: 11400000, guid: d0d466a729552d04caac33615eb70d89, type: 2}
-    advancedConfiguration:
-      m_StreamLogsToMainEditor: 1
-      m_LogsColor: {r: 0.3643, g: 0.581, b: 0.8679, a: 1}
-      m_Arguments: -screen-fullscreen 0 -screen-width 1024 -screen-height 720
+    - Player 2|1_run
+    - Player 2|1_deploy
+    m_PlayerTag: 
+    m_InitialScene: {fileID: 0}
+    m_AdvancedConfiguration:
+      StreamLogsToMainEditor: 0
+      LogsColor: {r: 0.3643, g: 0.581, b: 0.8679, a: 1}
+  m_LocalInstances: []
   m_RemoteInstances: []
   m_OverridePort: 0
   m_Port: 0

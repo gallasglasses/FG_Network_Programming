@@ -16,7 +16,8 @@ public class TestingNetcodeUI : MonoBehaviour
         startHostButton.onClick.AddListener(() =>
         {
             Debug.Log("HOST");
-            NetworkManager.Singleton.StartHost();
+            //NetworkManager.Singleton.StartHost();
+            MultiplayerManager.Instance.StartHost();
             Hide();
         });
 
@@ -30,19 +31,19 @@ public class TestingNetcodeUI : MonoBehaviour
         startClientButton.onClick.AddListener(() =>
         {
             Debug.Log("CLIENT");
-            NetworkManager.Singleton.StartClient();
+            //NetworkManager.Singleton.StartClient();
+            MultiplayerManager.Instance.StartClient();
             Hide();
         });
     }
 
     private void Update()
     {
-        playersInGameText.text = $"Players in game: {PlayersManager.Instance.PlayersInGame}";
+        playersInGameText.text = $"Players in game: {MultiplayerManager.Instance.PlayersInGame}";
     }
 
     private void Hide()
     {
-        //gameObject.SetActive(false);
         horizontalLayout.SetActive(false);
     }
 }

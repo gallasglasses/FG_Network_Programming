@@ -11,9 +11,8 @@ public class Projectile : NetworkBehaviour
 
     private Rigidbody rb;
     private Vector3 direction;
-
+    private NetworkVariable<Vector3> networkDirection = new NetworkVariable<Vector3>();
     private ProjectileSpawner spawner;
-    //private ObjectPool<Projectile> pool;
     private Coroutine deactivateProjectileAfterTimeCoroutine;
 
     private bool _hasBeenReleased = false;
@@ -28,44 +27,44 @@ public class Projectile : NetworkBehaviour
         deactivateProjectileAfterTimeCoroutine = StartCoroutine(DeactivateProjectileAfterTime());
 
         _hasBeenReleased = false;
+        direction = Vector3.zero;
     }
 
     private void FixedUpdate()
     {
-        //SetVelocity();
-        if(IsServer)
-        {
-            //UpdateProjectileClientRpc(transform.position);
-            transform.position += direction * Time.fixedDeltaTime;
-        }
+        transform.position += direction * Time.fixedDeltaTime;
     }
 
     public void SetDirection(Vector3 dir)
     {
         direction = dir.normalized * force;
+        networkDirection.Value = direction;
+        if (rb != null)
+        {
+            rb.AddForce(direction);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (_hasBeenReleased) return;
 
-        _hasBeenReleased = true;
-        if (TryGetComponent<NetworkObject>(out NetworkObject networkProjectile))
+        GamePlayer player = other.GetComponent<GamePlayer>();
+        if (player != null)
         {
-            spawner.DespawnProjectile(networkProjectile, gameObject);
+            player.Stun();
+            _hasBeenReleased = true;
+            if (TryGetComponent<NetworkObject>(out NetworkObject networkProjectile))
+            {
+                spawner.DespawnProjectile(networkProjectile, gameObject);
+            }
         }
-        //pool.Release(this);
     }
 
     public void SetSpawner(ProjectileSpawner s)
     {
         spawner = s;
     }
-
-    //public void SetPool(ObjectPool<Projectile> p)
-    //{
-    //    pool = p;
-    //}
 
     private IEnumerator DeactivateProjectileAfterTime()
     {
@@ -84,18 +83,6 @@ public class Projectile : NetworkBehaviour
             {
                 spawner.DespawnProjectile(networkProjectile, gameObject);
             }
-            //pool.Release(this);
         }
     }
-
-    [ClientRpc]
-    public void UpdateProjectileClientRpc(Vector3 newPosition)
-    {
-        transform.position = newPosition;
-    }
-
-    //public void SetVelocity()
-    //{
-    //    rb.linearVelocity = direction.normalized * force; 
-    //}
 }
