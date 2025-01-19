@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Netcode;
 using Unity.Services.Lobbies.Models;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterSelectUI : MonoBehaviour
 {
-
-
     [SerializeField] private Button mainMenuButton;
     [SerializeField] private Button readyButton;
     [SerializeField] private TextMeshProUGUI lobbyNameText;
@@ -24,6 +23,7 @@ public class CharacterSelectUI : MonoBehaviour
             Loader.Load(Loader.Scene.MainMenuScene);
         });
         readyButton.onClick.AddListener(() => {
+            Debug.Log($"[Awake] readyButton.onClick.AddListener");
             CharacterSelectReady.Instance.SetPlayerReady();
         });
     }

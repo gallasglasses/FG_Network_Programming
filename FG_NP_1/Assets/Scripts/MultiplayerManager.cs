@@ -40,7 +40,7 @@ public class MultiplayerManager : NetworkBehaviour
             Destroy(this.gameObject);
         }
 
-        playerName = PlayerPrefs.GetString(PLAYER_PREFS_PLAYER_NAME_MULTIPLAYER, "Player" + OwnerClientId);
+        playerName = PlayerPrefs.GetString(PLAYER_PREFS_PLAYER_NAME_MULTIPLAYER, "GamePlayer" + OwnerClientId);
         playerDataNetworkList = new NetworkList<PlayerData>();
 
         playerDataNetworkList.OnListChanged += PlayerDataNetworkList_OnListChanged;
@@ -78,6 +78,8 @@ public class MultiplayerManager : NetworkBehaviour
         this.playerName = playerName;
 
         PlayerPrefs.SetString(PLAYER_PREFS_PLAYER_NAME_MULTIPLAYER, playerName);
+        //
+        SetPlayerNameServerRpc(playerName);
     }
 
     private void PlayerDataNetworkList_OnListChanged(NetworkListEvent<PlayerData> changeEvent)
@@ -147,9 +149,9 @@ public class MultiplayerManager : NetworkBehaviour
 
     public void StartClient()
     {
-        //OnTryingToJoinGame?.Invoke(this, EventArgs.Empty);
+        OnTryingToJoinGame?.Invoke(this, EventArgs.Empty);
 
-        //NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Client_OnClientDisconnectCallback;
+        NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Client_OnClientDisconnectCallback;
         NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_Client_OnClientConnectedCallback;
         NetworkManager.Singleton.StartClient();
     }
@@ -158,6 +160,10 @@ public class MultiplayerManager : NetworkBehaviour
     {
         SetPlayerNameServerRpc(GetPlayerName());
         SetPlayerIdServerRpc(AuthenticationService.Instance.PlayerId);
+    }
+    private void NetworkManager_Client_OnClientDisconnectCallback(ulong clientId)
+    {
+        OnFailedToJoinGame?.Invoke(this, EventArgs.Empty);
     }
 
     [ServerRpc(RequireOwnership = false)]

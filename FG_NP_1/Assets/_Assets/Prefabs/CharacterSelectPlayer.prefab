@@ -345,10 +345,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerIndex: 0
-  readyGameObject: {fileID: 0}
-  playerVisual: {fileID: 0}
-  kickButton: {fileID: 0}
-  playerNameText: {fileID: 0}
+  readyGameObject: {fileID: 863771794139641719}
+  playerVisual: {fileID: 7393868251981738955}
+  kickButton: {fileID: 6301480931107944387}
+  playerNameText: {fileID: 1849527775935453100}
 --- !u!1 &4425053013167503685
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,3 +695,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2932259437557092975, guid: e9cc110b248de5f4381021c27689cea7, type: 3}
   m_PrefabInstance: {fileID: 640877899762248255}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7393868251981738955 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7960278427038308852, guid: e9cc110b248de5f4381021c27689cea7, type: 3}
+  m_PrefabInstance: {fileID: 640877899762248255}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e424d850c7fcd85499df6aa87c7ce140, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

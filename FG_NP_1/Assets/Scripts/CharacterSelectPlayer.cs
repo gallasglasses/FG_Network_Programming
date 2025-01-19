@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Netcode;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterSelectPlayer : MonoBehaviour
 {
-
-
     [SerializeField] private int playerIndex;
     [SerializeField] private GameObject readyGameObject;
     [SerializeField] private PlayerVisual playerVisual;
@@ -53,6 +52,7 @@ public class CharacterSelectPlayer : MonoBehaviour
 
             PlayerData playerData = MultiplayerManager.Instance.GetPlayerDataFromPlayerIndex(playerIndex);
 
+            Debug.Log($"[UpdatePlayer] playerData.clientId {playerData.clientId}.");
             readyGameObject.SetActive(CharacterSelectReady.Instance.IsPlayerReady(playerData.clientId));
 
             playerNameText.text = playerData.playerName.ToString();

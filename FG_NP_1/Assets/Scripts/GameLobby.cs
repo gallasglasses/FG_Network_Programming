@@ -34,6 +34,7 @@ public class GameLobby : MonoBehaviour
     private Lobby joinedLobby;
     private float heartbeatTimer;
     private float listLobbiesTimer;
+    private string playerName;
 
     private void Awake()
     {
@@ -47,7 +48,26 @@ public class GameLobby : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        InitializeUnityAuthentication();
+        //InitializeUnityAuthentication();
+    }
+
+    public async void Authentication(string playerName)
+    {
+        this.playerName = playerName;
+        InitializationOptions initializationOptions = new InitializationOptions();
+        initializationOptions.SetProfile(playerName);
+        // running multiple Builds on the same PC Unity services get different player IDs
+
+        await UnityServices.InitializeAsync(initializationOptions);
+
+        AuthenticationService.Instance.SignedIn += () =>
+        {
+            Debug.Log("Signed in. " + AuthenticationService.Instance.PlayerId);
+
+            ListLobbies();
+            UpdateLobbyPlayers();
+        };
+        await AuthenticationService.Instance.SignInAnonymouslyAsync();
     }
 
     private async void InitializeUnityAuthentication()
@@ -84,7 +104,7 @@ public class GameLobby : MonoBehaviour
 
     void Update()
     {
-        //HandleLobbyHeartbeat(); // disabled for testing with multiple builds
+        HandleLobbyHeartbeat();
         HandleUpdateListLobbies();
     }
 
@@ -140,6 +160,7 @@ public class GameLobby : MonoBehaviour
     [ContextMenu("Create Lobby")]
     public async void CreateLobby(string lobbyName, bool isPrivate)
     {
+        OnCreateLobbyStarted?.Invoke(this, EventArgs.Empty);
         try
         {
             CreateLobbyOptions newLobbyOptions = new CreateLobbyOptions
@@ -205,6 +226,7 @@ public class GameLobby : MonoBehaviour
     [ContextMenu("Join Lobby By Code")]
     public async void JoinLobbyByCode(string lobbyCode)
     {
+        OnJoinStarted?.Invoke(this, EventArgs.Empty);
         try
         {
             if (string.IsNullOrWhiteSpace(lobbyCode))
@@ -228,6 +250,7 @@ public class GameLobby : MonoBehaviour
     [ContextMenu("Join Lobby By Id")]
     public async void JoinLobbyById(string lobbyId)
     {
+        OnJoinStarted?.Invoke(this, EventArgs.Empty);
         try
         {
             QueryResponse queryResponse = await LobbyService.Instance.QueryLobbiesAsync();
@@ -246,6 +269,7 @@ public class GameLobby : MonoBehaviour
     [ContextMenu("Quick Join Lobby")]
     public async void QuickJoinLobby()
     {
+        OnJoinStarted?.Invoke(this, EventArgs.Empty);
         try
         {
             joinedLobby = await LobbyService.Instance.QuickJoinLobbyAsync();

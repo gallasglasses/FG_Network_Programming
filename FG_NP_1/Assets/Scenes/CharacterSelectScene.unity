@@ -119,77 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &55059511
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 55059514}
-  - component: {fileID: 55059512}
-  - component: {fileID: 55059513}
-  m_Layer: 0
-  m_Name: CharacterSelectReady
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &55059512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 55059511}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4248822500
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
---- !u!114 &55059513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 55059511}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bbeae27c6b10e74fb55ea22e90c9c0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
---- !u!4 &55059514
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 55059511}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &68092477
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,7 +1032,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2130734949593522852, guid: 9ef8a30a8f9f75f46a809d50da067606, type: 3}
       propertyPath: m_Name
-      value: Player_0
+      value: CharacterSelectPlayer_0
       objectReference: {fileID: 0}
     - target: {fileID: 3127072977858630276, guid: 9ef8a30a8f9f75f46a809d50da067606, type: 3}
       propertyPath: kickButton
@@ -1526,6 +1455,71 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &860981697
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 388163849008915886, guid: 72ad08a93b6f09649b8c26de52674a58, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 388163849008915886, guid: 72ad08a93b6f09649b8c26de52674a58, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 388163849008915886, guid: 72ad08a93b6f09649b8c26de52674a58, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 388163849008915886, guid: 72ad08a93b6f09649b8c26de52674a58, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 388163849008915886, guid: 72ad08a93b6f09649b8c26de52674a58, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 388163849008915886, guid: 72ad08a93b6f09649b8c26de52674a58, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 388163849008915886, guid: 72ad08a93b6f09649b8c26de52674a58, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 388163849008915886, guid: 72ad08a93b6f09649b8c26de52674a58, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 388163849008915886, guid: 72ad08a93b6f09649b8c26de52674a58, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 388163849008915886, guid: 72ad08a93b6f09649b8c26de52674a58, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2166160840502252199, guid: 72ad08a93b6f09649b8c26de52674a58, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 860516402
+      objectReference: {fileID: 0}
+    - target: {fileID: 2166160840502252199, guid: 72ad08a93b6f09649b8c26de52674a58, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3874837945
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751361712247263416, guid: 72ad08a93b6f09649b8c26de52674a58, type: 3}
+      propertyPath: m_Name
+      value: CharacterSelectReady
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 72ad08a93b6f09649b8c26de52674a58, type: 3}
 --- !u!1 &885320690
 GameObject:
   m_ObjectHideFlags: 0
@@ -2408,7 +2402,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2130734949593522852, guid: 9ef8a30a8f9f75f46a809d50da067606, type: 3}
       propertyPath: m_Name
-      value: Player_3
+      value: CharacterSelectPlayer_3
       objectReference: {fileID: 0}
     - target: {fileID: 3127072977858630276, guid: 9ef8a30a8f9f75f46a809d50da067606, type: 3}
       propertyPath: kickButton
@@ -2748,7 +2742,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2130734949593522852, guid: 9ef8a30a8f9f75f46a809d50da067606, type: 3}
       propertyPath: m_Name
-      value: Player_1
+      value: CharacterSelectPlayer_1
       objectReference: {fileID: 0}
     - target: {fileID: 3127072977858630276, guid: 9ef8a30a8f9f75f46a809d50da067606, type: 3}
       propertyPath: kickButton
@@ -3661,7 +3655,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2130734949593522852, guid: 9ef8a30a8f9f75f46a809d50da067606, type: 3}
       propertyPath: m_Name
-      value: Player_2
+      value: CharacterSelectPlayer_2
       objectReference: {fileID: 0}
     - target: {fileID: 3127072977858630276, guid: 9ef8a30a8f9f75f46a809d50da067606, type: 3}
       propertyPath: kickButton
@@ -3827,4 +3821,4 @@ SceneRoots:
   - {fileID: 2145517228}
   - {fileID: 1400904718}
   - {fileID: 1262703658}
-  - {fileID: 55059514}
+  - {fileID: 860981697}
