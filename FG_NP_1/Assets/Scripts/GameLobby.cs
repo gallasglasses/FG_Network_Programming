@@ -48,7 +48,7 @@ public class GameLobby : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        //InitializeUnityAuthentication();
+        InitializeUnityAuthentication();
     }
 
     public async void Authentication(string playerName)

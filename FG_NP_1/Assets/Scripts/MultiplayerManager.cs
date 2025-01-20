@@ -79,7 +79,7 @@ public class MultiplayerManager : NetworkBehaviour
 
         PlayerPrefs.SetString(PLAYER_PREFS_PLAYER_NAME_MULTIPLAYER, playerName);
         //
-        SetPlayerNameServerRpc(playerName);
+        //SetPlayerNameServerRpc(playerName);
     }
 
     private void PlayerDataNetworkList_OnListChanged(NetworkListEvent<PlayerData> changeEvent)
@@ -106,11 +106,10 @@ public class MultiplayerManager : NetworkBehaviour
 
     public void StartHost()
     {
-        //NetworkManager.Singleton.ConnectionApprovalCallback += NetworkManager_ConnectionApprovalCallback;
+        NetworkManager.Singleton.ConnectionApprovalCallback += NetworkManager_ConnectionApprovalCallback;
         NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_OnClientConnectedCallback;
         NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Server_OnClientDisconnectCallback;
         NetworkManager.Singleton.StartHost();
-        //GridManager.Instance.GenerateGrid();
     }
 
     private void NetworkManager_OnClientConnectedCallback(ulong clientId)

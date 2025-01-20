@@ -8,8 +8,6 @@ using UnityEngine.UI;
 
 public class LobbyUI : MonoBehaviour
 {
-    [SerializeField] private Button authenticationButton;
-
     [SerializeField] private Button mainMenuButton;
     [SerializeField] private Button createLobbyButton;
     [SerializeField] private Button quickJoinButton;
@@ -35,11 +33,6 @@ public class LobbyUI : MonoBehaviour
         });
         joinCodeButton.onClick.AddListener(() => {
             GameLobby.Instance.JoinLobbyByCode(joinCodeInputField.text);
-        });
-
-        // for testing
-        authenticationButton.onClick.AddListener(() => {
-            GameLobby.Instance.Authentication(playerNameInputField.text);
         });
 
         lobbyTemplate.gameObject.SetActive(false);

@@ -24,32 +24,29 @@ public class Tile : NetworkBehaviour
     {
         base.OnNetworkSpawn();
 
+        tileRenderer = GetComponent<Renderer>();
         if (tileRenderer == null)
         {
-            tileRenderer = GetComponent<Renderer>();
-            if (tileRenderer == null)
-            {
-                Debug.LogError($"tileRenderer not found on Tile {tileId}");
-            }
+            Debug.LogError($"tileRenderer not found on Tile {tileId}");
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        GamePlayer player = other.GetComponent<GamePlayer>();
-        if (player != null)
-        {
-            NetworkObject playerNetworkObject = other.GetComponent<NetworkObject>();
-            if (playerNetworkObject != null && IsServer)
-            {
-                ulong playerId = playerNetworkObject.OwnerClientId;
-                Color playerColor = player.GetPlayerColor();
-                CaptureTile(playerId, playerColor);
-            }
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    GamePlayer player = other.GetComponent<GamePlayer>();
+    //    if (player != null)
+    //    {
+    //        NetworkObject playerNetworkObject = other.GetComponent<NetworkObject>();
+    //        if (playerNetworkObject != null && IsServer)
+    //        {
+    //            ulong playerId = playerNetworkObject.OwnerClientId;
+    //            Color playerColor = player.GetPlayerColor();
+    //            CaptureTile(playerId, playerColor);
+    //        }
+    //    }
+    //}
 
-    private void CaptureTile(ulong capturingPlayerId, Color playerColor)
+    public void CaptureTile(ulong capturingPlayerId, Color playerColor)
     {
         if (!IsServer)
             return;
@@ -75,6 +72,7 @@ public class Tile : NetworkBehaviour
 
         tileRenderer.material.color = playerColor;
 
+        GameManager.Instance.AddCapturedTile(ownerClientId);
         UpdateTileColorClientRpc(playerColor);
     }
 

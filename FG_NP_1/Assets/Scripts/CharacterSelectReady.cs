@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class CharacterSelectReady : NetworkBehaviour
@@ -17,16 +16,44 @@ public class CharacterSelectReady : NetworkBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
+        Instance = this;
+
+        playerReadyDictionary = new Dictionary<ulong, bool>();
+
+        foreach (ulong clientId in NetworkManager.Singleton.ConnectedClientsIds)
         {
-            Debug.Log($"[Awake] Instance == null");
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            playerReadyDictionary[clientId] = false;
+            Debug.Log($"[Awake] Added client {clientId} to playerReadyDictionary with ready status: false");
         }
-        else
+        Debug.Log($"[Awake] playerReadyDictionary contains {playerReadyDictionary.Count} entries after initialization.");
+    }
+
+    private void OnEnable()
+    {
+        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+    }
+
+    private void OnDisable()
+    {
+        NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
+        NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
+    }
+
+    private void OnClientConnected(ulong clientId)
+    {
+        if (!playerReadyDictionary.ContainsKey(clientId))
         {
-            Debug.Log($"[Awake] Instance != null");
-            Destroy(this.gameObject);
+            playerReadyDictionary[clientId] = false;
+            Debug.Log($"[OnClientConnected] Client {clientId} added to playerReadyDictionary with ready status: false");
+        }
+    }
+    private void OnClientDisconnected(ulong clientId)
+    {
+        if (playerReadyDictionary.ContainsKey(clientId))
+        {
+            playerReadyDictionary.Remove(clientId);
+            Debug.Log($"[OnClientDisconnected] Client {clientId} removed from playerReadyDictionary");
         }
     }
 
@@ -34,6 +61,11 @@ public class CharacterSelectReady : NetworkBehaviour
     {
         ulong clientId = NetworkManager.Singleton.LocalClientId;
         Debug.Log($"[SetPlayerReady] LocalClientId: {clientId}");
+        if (!playerReadyDictionary.ContainsKey(clientId))
+        {
+            Debug.Log($"[SetPlayerReady] Local ClientId {clientId} is not in playerReadyDictionary. Cannot set ready.");
+            return;
+        }
         SetPlayerReadyServerRpc();
     }
 
@@ -42,13 +74,13 @@ public class CharacterSelectReady : NetworkBehaviour
     {
         ulong clientId = serverRpcParams.Receive.SenderClientId;
         SetPlayerReadyClientRpc(clientId);
-        Debug.Log($"[SetPlayerReadyServerRpc] Connected Clients: {string.Join(", ", NetworkManager.Singleton.ConnectedClientsIds)}");
-        Debug.Log($"[SetPlayerReadyServerRpc] SenderClientId: {clientId}");
+        //Debug.Log($"[SetPlayerReadyServerRpc] Connected Clients: {string.Join(", ", NetworkManager.Singleton.ConnectedClientsIds)}");
+        //Debug.Log($"[SetPlayerReadyServerRpc] SenderClientId: {clientId}");
 
 
         if (!playerReadyDictionary.ContainsKey(clientId))
         {
-            Debug.LogWarning($"[SetPlayerReadyServerRpc] Client {clientId} is not in playerReadyDictionary! Adding now.");
+            Debug.Log($"[SetPlayerReadyServerRpc] Client {clientId} is not in playerReadyDictionary! Adding now.");
             playerReadyDictionary[clientId] = false;
         }
         playerReadyDictionary[clientId] = true;
@@ -76,11 +108,11 @@ public class CharacterSelectReady : NetworkBehaviour
     [ClientRpc]
     private void SetPlayerReadyClientRpc(ulong clientId)
     {
-        if (!playerReadyDictionary.ContainsKey(clientId))
-        {
-            Debug.LogWarning($"[SetPlayerReadyClientRpc] Client {clientId} not found in dictionary on client. Adding now.");
-            playerReadyDictionary[clientId] = false;
-        }
+        //if (!playerReadyDictionary.ContainsKey(clientId))
+        //{
+        //    Debug.LogWarning($"[SetPlayerReadyClientRpc] Client {clientId} not found in dictionary on client. Adding now.");
+        //    playerReadyDictionary[clientId] = false;
+        //}
         playerReadyDictionary[clientId] = true;
         Debug.Log($"[SetPlayerReadyClientRpc] Client {clientId} marked as ready on client.");
 
@@ -92,7 +124,7 @@ public class CharacterSelectReady : NetworkBehaviour
     {
         if (!playerReadyDictionary.ContainsKey(clientId))
         {
-            Debug.LogWarning($"[IsPlayerReady] Client {clientId} not found in playerReadyDictionary.");
+            Debug.Log($"[IsPlayerReady] Client {clientId} not found in playerReadyDictionary.");
             return false;
         }
 

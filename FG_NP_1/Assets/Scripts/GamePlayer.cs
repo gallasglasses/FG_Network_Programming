@@ -47,6 +47,7 @@ public class GamePlayer : NetworkBehaviour
     {
         UpdatePlayerData();
     }
+
     private void UpdatePlayerData()
     {
         PlayerData playerData = MultiplayerManager.Instance.GetPlayerDataFromClientId(OwnerClientId);
@@ -56,7 +57,7 @@ public class GamePlayer : NetworkBehaviour
 
     private void GameInput_OnInteractAction(object sender, System.EventArgs e)
     {
-        if (IsClient && IsOwner)
+        if (IsClient && IsOwner && GameManager.Instance.IsGameState(GameState.GamePlaying))
         {
             Debug.Log("GameInput_OnInteractAction");
             weapon.HandleAttack(true, transform.forward.normalized);
@@ -68,11 +69,12 @@ public class GamePlayer : NetworkBehaviour
         if (!IsOwner) return;
 
         HandleMovement();
-        //CheckTileCapture();
+        CheckTileCapture();
     }
 
     private void HandleMovement()
     {
+        if (!GameManager.Instance.IsGameState(GameState.GamePlaying)) return;
         if (isStunned.Value) return;
 
         Vector2 inputVector = GameInput.Instance.GetMovementVectorNormalized();
@@ -90,22 +92,40 @@ public class GamePlayer : NetworkBehaviour
 
     private void CheckTileCapture()
     {
-        if(IsOwner)
+        if(IsOwner && IsClient && GameManager.Instance.IsGameState(GameState.GamePlaying))
         {
-            Ray ray = new Ray(transform.position, Vector3.down);
+            Vector3 rayStartPosition = new Vector3(transform.position.x, 1f, transform.position.z);
+            Ray ray = new Ray(rayStartPosition, Vector3.down); 
+            Debug.DrawRay(rayStartPosition, Vector3.down * raycastDistance, Color.red, 1f);
+
             if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance))
             {
                 Tile tile = hit.collider.GetComponent<Tile>();
                 if (tile != null)
                 {
-                    CaptureTile(tile);
+                    //Debug.Log($"Tile {tile} trying to be captured by player {OwnerClientId}");
+                    //tile.CaptureTile(OwnerClientId, GetPlayerColor());
+
+                    RequestTileCaptureServerRpc(tile.GetComponent<NetworkObject>().NetworkObjectId);
                 }
             }
         }
     }
-    private void CaptureTile(Tile tile)
+
+    [Rpc(SendTo.Server)]
+    private void RequestTileCaptureServerRpc(ulong tileNetworkObjectId)
     {
-        //gridNetworkManager.CaptureTileServerRpc(tile.tileId, OwnerClientId, GetPlayerColor());
+        if (!NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(tileNetworkObjectId, out var networkObject))
+        {
+            Debug.LogError($"Tile with NetworkObjectId {tileNetworkObjectId} not found.");
+            return;
+        }
+
+        Tile tile = networkObject.GetComponent<Tile>();
+        if (tile != null)
+        {
+            tile.CaptureTile(OwnerClientId, GetPlayerColor());
+        }
     }
 
     public void Stun()
